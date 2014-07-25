@@ -8,6 +8,9 @@
     <script type="text/javascript" src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="css/foundation/js/foundation.min.js"></script>
 
+    <script type="text/javascript" src="js/patient_zero.js"></script>
+    <script type="text/javascript" src="js/search.js"></script>
+
     <link rel="stylesheet" href="css/foundation/css/normalize.css">
     <link rel="stylesheet" href="css/foundation/css/foundation.min.css">
     <link rel="stylesheet" href="css/app.css">
