@@ -50,7 +50,7 @@
                 "children": []
             };
 
-            newData.children = digestChildren(tweetData.tweets);
+            newData.children = digestChildren(tweetData.tweets,'tweet');
 
             for(var i = 0; i < newData.children.length; i++ ) {
                 var child = newData.children[i];
@@ -67,7 +67,7 @@
                     var tweetObj = children[i],
                         tweet = tweetObj.tweet,
                         childTweets = tweetObj.children,
-                        nextGen = digestChildren(tweetObj.children, "nt_follow" , depth++).concat(digestChildren(tweetObj.adoptedChildren, "nt_nofollow" , depth++)),
+                        nextGen = digestChildren(tweetObj.children, "rt_follow" , depth++).concat(digestChildren(tweetObj.adoptedChildren, "rt_nofollow" , depth++)),
                         child = {
                             "name": tweet.username,
                             "weight": tweet.followerCount,
@@ -148,20 +148,15 @@
                     return "translate(" + d.y + "," + d.x + ")"; });
 
         nodeEnter.append("circle")
-                .attr("r", function(d) { return d.weight/100; })
+                .attr("r", function(d) { return 50; })
                 .style("fill", function(d) { return type_styles[d.type].circle.fill; })
                 .style("stroke", function(d) { return type_styles[d.type].circle.stroke; })
                 .style("stroke-width", function(d) { return type_styles[d.type].circle.strokeWidth; })
                 .on('click',click);
 
         nodeEnter.append('text')
-                .attr("x", function(d) {
-                    return d.children || d._children ?
-                            (d.value + 4) * -1 : d.value + 4 })
                 .attr("dy", ".35em")
                 .attr("fill",function(d){ return type_styles[d.type].text.fill})
-                .attr("text-anchor", function(d) {
-                    return d.children || d._children ? "end" : "start"; })
                 .text(function(d){ return d.name;})
                 .on('click',click);
 
@@ -174,6 +169,7 @@
         link.enter().insert("path", "g")
                 .attr("class", "link")
                 .style("stroke", function(d) { return '#666'; })
+                .style("fill", "none")
                 .attr("d", diagonal);
 
         function click(d, i){
