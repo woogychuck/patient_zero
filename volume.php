@@ -30,42 +30,42 @@
     var type_styles = {
         search:{
             circle:{
-                fill: #513D0B;
-                stroke: #412D00;
-                strokeWidth: 3;
+                fill: "#513D0B",
+                stroke: "#412D00",
+                strokeWidth: 3
             },
             text:{
-                fill:#444;
+                fill:"#444"
             }
         },
         tweet: {
             circle:{
-                fill: #90C81C;
-                stroke: #80B80C;
-                strokeWidth: 2;
+                fill: "#90C81C",
+                stroke: "#80B80C",
+                strokeWidth: 2
             },
             text:{
-                fill:#444;
+                fill:"#444"
             }
         },
         rt_follow:{
             circle:{
-                fill: #0A8DA9;
-                stroke: #007D99;
-                strokeWidth: 1;
+                fill: "#0A8DA9",
+                stroke: "#007D99",
+                strokeWidth: 1
             },
             text:{
-                fill:#444;
+                fill:"#444"
             }
         },
         rt_nofollow:{
             circle:{
-                fill: #7DD4D1;
-                stroke: #6DC4C1;
-                strokeWidth: 1;
+                fill: "#7DD4D1",
+                stroke: "#6DC4C1",
+                strokeWidth: 1
             },
             text:{
-                fill:#444;
+                fill:"#444"
             }
         }
     }
