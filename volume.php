@@ -27,7 +27,47 @@
         update();
     });
 
-    var type_colors = {
+    var type_styles = {
+        search:{
+            circle:{
+                fill: #513D0B;
+                stroke: #412D00;
+                strokeWidth: 3;
+            },
+            text:{
+                fill:#444;
+            }
+        },
+        tweet: {
+            circle:{
+                fill: #90C81C;
+                stroke: #80B80C;
+                strokeWidth: 2;
+            },
+            text:{
+                fill:#444;
+            }
+        },
+        rt_follow:{
+            circle:{
+                fill: #0A8DA9;
+                stroke: #007D99;
+                strokeWidth: 1;
+            },
+            text:{
+                fill:#444;
+            }
+        },
+        rt_nofollow:{
+            circle:{
+                fill: #7DD4D1;
+                stroke: #6DC4C1;
+                strokeWidth: 1;
+            },
+            text:{
+                fill:#444;
+            }
+        }
     }
 
     function update() {
@@ -51,7 +91,9 @@
 
         nodeEnter.append("circle")
                 .attr("r", function(d) { return d.weight/100; })
-                .style("fill", function(d) { return 'steelblue'; })
+                .style("fill", function(d) { return type_styles[d.type].circle.fill; })
+                .style("stroke", function(d) { return type_styles[d.type].circle.stroke; })
+                .style("stroke-width", function(d) { return type_styles[d.type].circle.strokeWidth; })
                 .on('click',click);
 
         nodeEnter.append('text')
@@ -59,6 +101,7 @@
                     return d.children || d._children ?
                             (d.value + 4) * -1 : d.value + 4 })
                 .attr("dy", ".35em")
+                .attr("fill",function(d){ return type_styles[d.type].text.fill})
                 .attr("text-anchor", function(d) {
                     return d.children || d._children ? "end" : "start"; })
                 .text(function(d){ return d.name;})
