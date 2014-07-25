@@ -27,6 +27,9 @@
         update();
     });
 
+    var type_colors = {
+    }
+
     function update() {
 
         // Compute the new tree layout.
@@ -48,7 +51,8 @@
 
         nodeEnter.append("circle")
                 .attr("r", function(d) { return d.weight/100; })
-                .style("fill", function(d) { return 'steelblue'; });
+                .style("fill", function(d) { return 'steelblue'; })
+                .on('click',click);
 
         nodeEnter.append('text')
                 .attr("x", function(d) {
@@ -58,6 +62,7 @@
                 .attr("text-anchor", function(d) {
                     return d.children || d._children ? "end" : "start"; })
                 .text(function(d){ return d.name;})
+                .on('click',click);
 
 
         // Declare the links…
@@ -70,6 +75,10 @@
                 .style("stroke", function(d) { return '#666'; })
                 .attr("d", diagonal);
 
+        function click(d){
+            alert('click');
+            console.log(d);
+        }
     }
 </script>
 
