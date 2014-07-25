@@ -1,6 +1,19 @@
 <?php require_once 'templates/header.php' ?>
 <svg class="chart"></svg>
 
+<script id="tweetPopup" type="template">
+    <div class="tweetPopup">
+        <span class="displayName">{{displayName}}</span>
+        <span class="userName">{{userName}}</span>
+        <span class="tweetCount">{{tweetCount}}</span>
+        <span class="followerCount">{{followerCount}}</span>
+        <div class="message">{{message}}</div>
+        <span class="retweetCount">{{retweetCount}}</span>
+        <span class="favoritedCount">{{favoritedCount}}</span>
+        <span class="replyCount">{{replyCount}}</span>
+    </div>
+</script>
+
 <script>
     var root;
 
@@ -163,9 +176,14 @@
                 .style("stroke", function(d) { return '#666'; })
                 .attr("d", diagonal);
 
-        function click(d){
-            alert('click');
-            console.log(d);
+        function click(d, i){
+            var domElement = this,
+                event = d3.event,
+                relativeCoordinates = d3.mouse(domElement),
+                selection = d3.select(domElement);
+
+            var popup = PatientZero.Templating.compile('tweetPopup', d.tweet);
+            console.log('that done got get popped son');
         }
     }
 </script>

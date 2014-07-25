@@ -10,6 +10,7 @@
 
     <script type="text/javascript" src="js/patient_zero.js"></script>
     <script type="text/javascript" src="js/search.js"></script>
+    <script type="text/javascript" src="js/templating.js"></script>
 
     <link rel="stylesheet" href="css/foundation/css/normalize.css">
     <link rel="stylesheet" href="css/foundation/css/foundation.min.css">
