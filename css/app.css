@@ -5,7 +5,8 @@
 }
 
 #dateLabel {
-    display:inline-block;
+    display: inline-block;
+}
 
 .tweetPopup {
     background-color: #fec;
