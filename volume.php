@@ -14,16 +14,17 @@
   </select>
 </form>
 
-<script id="tweetPopup" type="template">
-    <div class="tweetPopup">
+<script id="tweetPopup" type="text/html">
+    <div id="tweetPopup{{id}}" class="tweetPopup">
+        <img class="avatar" src="{{userImageUrl}}" />
         <span class="displayName">{{displayName}}</span>
-        <span class="userName">{{userName}}</span>
-        <span class="tweetCount">{{tweetCount}}</span>
-        <span class="followerCount">{{followerCount}}</span>
+        <a href="https://www.twitter.com/#!/{{username}}" class="username">{{username}}</a>
+        <span class="tweetCount">{{userTweetCount}} Tweets</span>
+        <span class="followerCount">{{followerCount}} Followers</span>
         <div class="message">{{message}}</div>
-        <span class="retweetCount">{{retweetCount}}</span>
-        <span class="favoritedCount">{{favoritedCount}}</span>
-        <span class="replyCount">{{replyCount}}</span>
+        <span class="retweetCount"><i class="fa fa-retweet"></i> {{retweetCount}}</span>
+        <span class="favoritedCount"><i class="fa fa-star"></i> {{favoritedCount}}</span>
+        <span class="replyCount"><i class="fa fa-reply"></i> {{replyCount}}</span>
     </div>
 </script>
 
@@ -207,8 +208,21 @@
                 relativeCoordinates = d3.mouse(domElement),
                 selection = d3.select(domElement);
 
-            var popup = PatientZero.Templating.compile('tweetPopup', d.tweet);
-            console.log('that done got get popped son');
+            var popup = $(PatientZero.Templating.compile('tweetPopup', d.tweet))
+                .css({
+                    position: 'absolute',
+                    left: event.clientX,
+                    top: event.clientY
+                });
+
+            var oldPopup = $('#' + popup.attr('id'));
+
+            if (oldPopup.length > 0) {
+                oldPopup.remove();
+            }
+            else {
+                popup.appendTo(document.body);
+            }
         }
     }
 </script>
