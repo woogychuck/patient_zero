@@ -23,9 +23,54 @@
 
 
     d3.json("data/search_results_sdcc.json", function(json) {
-        root = json;
-        update();
-    });
+        var data = massage(json);
+                console.log(data);
+                root = data;
+                update();
+            });
+
+        function massage(tweetData) {
+            var newData = {
+                "name": tweetData.name,
+                "weight": 500,
+                "type": "search",
+                "children": []
+            };
+
+            newData.children = digestChildren(tweetData.tweets);
+
+            for(var i = 0; i < newData.children.length; i++ ) {
+                var child = newData.children[i];
+            }
+
+            return newData;
+        }
+
+        function digestChildren( children, type, depth ) {
+            if(typeof(depth)==='undefined') depth = 0;
+            if( depth < 2 ) {
+                var toRet = [];
+                for(var i = 0; i < children.length; i++ ) {
+                    var tweetObj = children[i],
+                        tweet = tweetObj.tweet,
+                        childTweets = tweetObj.children,
+                        nextGen = digestChildren(tweetObj.children, "nt_follow" , depth++).concat(digestChildren(tweetObj.adoptedChildren, "nt_nofollow" , depth++)),
+                        child = {
+                            "name": tweet.username,
+                            "weight": tweet.followerCount,
+                            "type": type,
+                            "tweet": tweet,
+                            "children": nextGen
+                        };
+                    toRet.push(child);
+                }
+                return toRet;
+            }
+            else {
+                return [];
+            }
+        }
+
 
     var type_styles = {
         search:{
