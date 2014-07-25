@@ -1,0 +1,142 @@
+{
+    "name": "#SDCC",
+    "term": "#SDCC",
+    "tweets": [
+        {
+            "tweet": {
+                "id": 0,
+                "username": "kinggeek",
+                "displayName": "King of all geeks!",
+                "userImageUrl": "/patient_zero/search_results_sdcc/geekking.jpg",
+                "userTweetCount": 1,
+                "followerCount": 2,
+                "message": "Pandering announcement of new property to a beloved franchise #MakeItRain",
+                "timestamp": "2014-07-25T15:54:47.526Z",
+                "date": "Jul 25 2014",
+                "retweetCount": 5,
+                "favoritedCount": 5,
+                "replyCount": 0
+            },
+            "children": [
+                {
+                    "tweet": {
+                        "id": 1,
+                        "username": "fanboy",
+                        "displayName": "OMG MOVIES!!",
+                        "userImageUrl": "/patient_zero/search_results_sdcc/follower.png",
+                        "userTweetCount": 1,
+                        "followerCount": 0,
+                        "message": "RT @kinggeek Pandering announcement of new property to a beloved franchise #MakeItRain",
+                        "timestamp": "2014-07-25T15:54:47.526Z",
+                        "date": "Jul 25 2014",
+                        "retweetCount": 0,
+                        "favoritedCount": 0,
+                        "replyCount": 0
+                    },
+                    "children": [
+
+                    ],
+                    "adoptedChildren": [
+
+                    ],
+                    "weight": 1
+                },
+                {
+                    "tweet": {
+                        "id": 2,
+                        "username": "fangirl",
+                        "displayName": "OMG SHOWZ!!",
+                        "userImageUrl": "/patient_zero/search_results_sdcc/follower.png",
+                        "userTweetCount": 1,
+                        "followerCount": 0,
+                        "message": "RT @kinggeek Pandering announcement of new property to a beloved franchise #MakeItRain",
+                        "timestamp": "2014-07-25T15:54:47.526Z",
+                        "date": "Jul 25 2014",
+                        "retweetCount": 0,
+                        "favoritedCount": 0,
+                        "replyCount": 0
+                    },
+                    "children": [
+
+                    ],
+                    "adoptedChildren": [
+
+                    ],
+                    "weight": 1
+                }
+            ],
+            "adoptedChildren": [
+                {
+                    "tweet": {
+                        "id": 3,
+                        "username": "oblivious",
+                        "displayName": "Wah?",
+                        "userImageUrl": "/patient_zero/search_results_sdcc/follower.png",
+                        "userTweetCount": 1,
+                        "followerCount": 0,
+                        "message": "RT @kinggeek Pandering announcement of new property to a beloved franchise #MakeItRain",
+                        "timestamp": "2014-07-25T15:54:47.526Z",
+                        "date": "Jul 25 2014",
+                        "retweetCount": 0,
+                        "favoritedCount": 0,
+                        "replyCount": 0
+                    },
+                    "children": [
+
+                    ],
+                    "adoptedChildren": [
+
+                    ],
+                    "weight": 1
+                },
+                {
+                    "tweet": {
+                        "id": 1,
+                        "username": "under rock",
+                        "displayName": "Huh?",
+                        "userImageUrl": "/patient_zero/search_results_sdcc/follower.png",
+                        "userTweetCount": 1,
+                        "followerCount": 0,
+                        "message": "RT @kinggeek Pandering announcement of new property to a beloved franchise #MakeItRain",
+                        "timestamp": "2014-07-25T15:54:47.526Z",
+                        "date": "Jul 25 2014",
+                        "retweetCount": 0,
+                        "favoritedCount": 0,
+                        "replyCount": 0
+                    },
+                    "children": [
+
+                    ],
+                    "adoptedChildren": [
+
+                    ],
+                    "weight": 1
+                },
+                {
+                    "tweet": {
+                        "id": 1,
+                        "username": "out of touch",
+                        "displayName": "er...",
+                        "userImageUrl": "/patient_zero/search_results_sdcc/follower.png",
+                        "userTweetCount": 1,
+                        "followerCount": 0,
+                        "message": "RT @kinggeek Pandering announcement of new property to a beloved franchise #MakeItRain",
+                        "timestamp": "2014-07-25T15:54:47.526Z",
+                        "date": "Jul 25 2014",
+                        "retweetCount": 0,
+                        "favoritedCount": 0,
+                        "replyCount": 0
+                    },
+                    "children": [
+
+                    ],
+                    "adoptedChildren": [
+
+                    ],
+                    "weight": 1
+                }
+            ],
+            "weight": 2
+        }
+    ]
+}
