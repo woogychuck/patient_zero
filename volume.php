@@ -1,5 +1,18 @@
 <?php require_once 'templates/header.php' ?>
 <svg class="chart"></svg>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+
+<form id="reservation">
+  <label id="dateLabel" for="dateSelect">Select Date</label>
+  <select name="dates" id="dateSelect">
+    <option>Date 1</option>
+    <option>Date 2</option>
+    <option>Date 3</option>
+    <option>Date 4</option>
+    <option>Date 5</option>
+    <option>Date 6</option>
+  </select>
+</form>
 
 <script id="tweetPopup" type="template">
     <div class="tweetPopup">
@@ -15,6 +28,23 @@
 </script>
 
 <script>
+
+    $(function() {
+        var select = $( "#dateSelect" );
+        var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
+          min: 1,
+          max: 6,
+          range: "min",
+          value: select[ 0 ].selectedIndex + 1,
+          slide: function( event, ui ) {
+            select[ 0 ].selectedIndex = ui.value - 1;
+          }
+        });
+        $( "#dateSelect" ).change(function() {
+          slider.slider( "value", this.selectedIndex + 1 );
+        });
+      });
+
     var root;
 
     // ************** Generate the tree diagram	 *****************
@@ -83,7 +113,6 @@
                 return [];
             }
         }
-
 
     var type_styles = {
         search:{

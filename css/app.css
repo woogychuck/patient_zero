@@ -1,0 +1,9 @@
+#dateSelect {
+    text-align: left;
+    width: 80px;
+    display:inline-block;
+}
+
+#dateLabel {
+    display:inline-block;
+}
