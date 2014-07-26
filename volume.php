@@ -117,44 +117,20 @@
 
     var type_styles = {
         search:{
-            circle:{
-                fill: "#513D0B",
-                stroke: "#412D00",
-                strokeWidth: 3
-            },
-            text:{
-                fill:"#444"
-            }
+            circle:{r:50},
+            text:{'dy':'70px','dx':'-25px'}
         },
         tweet: {
-            circle:{
-                fill: "#90C81C",
-                stroke: "#80B80C",
-                strokeWidth: 2
-            },
-            text:{
-                fill:"#444"
-            }
+            circle:{r:30},
+            text:{'dy':'50px','dx':'-15px'}
         },
         rt_follow:{
-            circle:{
-                fill: "#0A8DA9",
-                stroke: "#007D99",
-                strokeWidth: 1
-            },
-            text:{
-                fill:"#444"
-            }
+            circle:{r:20},
+            text: {'dy':'.35em','dx':'30px'}
         },
         rt_nofollow:{
-            circle:{
-                fill: "#7DD4D1",
-                stroke: "#6DC4C1",
-                strokeWidth: 1
-            },
-            text:{
-                fill:"#444"
-            }
+            circle:{r:20},
+            text: {'dy':'.35em','dx':'30px'}
         }
     }
 
@@ -178,15 +154,14 @@
                     return "translate(" + d.y + "," + d.x + ")"; });
 
         nodeEnter.append("circle")
-                .attr("r", function(d) { return 50; })
-                .style("fill", function(d) { return type_styles[d.type].circle.fill; })
-                .style("stroke", function(d) { return type_styles[d.type].circle.stroke; })
-                .style("stroke-width", function(d) { return type_styles[d.type].circle.strokeWidth; })
+                .attr('r', function(d){ return type_styles[d.type].circle.r; })
+                .attr('class', function(d) { return 'node_'+d.type; })
                 .on('click',click);
 
         nodeEnter.append('text')
-                .attr("dy", ".35em")
-                .attr("fill",function(d){ return type_styles[d.type].text.fill})
+                .attr('dy', function(d){ return type_styles[d.type].text.dy; })
+                .attr('dx', function(d){ return type_styles[d.type].text.dx; })
+                .attr('class',function(d) { return 'text_'+d.type; })
                 .text(function(d){ return d.name;})
                 .on('click',click);
 

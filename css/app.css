@@ -36,3 +36,9 @@
     border: 1px solid #000;
     padding: 2px;
 }
+
+.node_search {
+    fill:#513D0B;
+    stroke:#513D0B;
+    stroke-width:3;
+}
