@@ -56,7 +56,7 @@
 
 
     function getData(offset){
-        d3.json("data/search_results_sdcc_" + offset + ".json", function(json) {
+        PatientZero.Search.getResults({term: 'sdcc'}, offset).then(function (json) {
             var data = massage(json);
                 root = data;
                 update();
