@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/foundation/css/normalize.css">
     <link rel="stylesheet" href="css/foundation/css/foundation.min.css">
     <link rel="stylesheet" href="css/font-awesome-4.1.0/css/font-awesome.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>

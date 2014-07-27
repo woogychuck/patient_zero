@@ -39,6 +39,28 @@
 
 .node_search {
     fill:#513D0B;
-    stroke:#513D0B;
-    stroke-width:3;
+    stroke:#412D00;
+    stroke-width:3px;
+    cursor: pointer;
+}
+
+.node_tweet {
+    fill: #90C81C;
+    stroke: #80B80C;
+    stroke-width: 2px;
+    cursor: pointer;
+}
+
+.node_rt_follow {
+    fill: #0A8DA9;
+    stroke: #007D99;
+    stroke-width: 1px;
+    cursor: pointer;
+}
+
+.node_rt_nofollow {
+    fill: #7DD4D1;
+    stroke: #6DC4C1;
+    stroke-width: 1px;
+    cursor: pointer;
 }

@@ -1,16 +1,16 @@
 <?php require_once 'templates/header.php' ?>
-<svg class="chart"></svg>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+<svg class="chart">
+</svg>
 
 <form id="reservation">
   <label id="dateLabel" for="dateSelect">Select Date</label>
   <select name="dates" id="dateSelect">
-    <option>Date 1</option>
-    <option>Date 2</option>
-    <option>Date 3</option>
-    <option>Date 4</option>
-    <option>Date 5</option>
-    <option>Date 6</option>
+    <option value="1">Date 1</option>
+    <option value="2">Date 2</option>
+    <option value="3">Date 3</option>
+    <option value="4">Date 4</option>
+    <option value="5">Date 5</option>
+    <option value="6">Date 6</option>
   </select>
 </form>
 
@@ -29,23 +29,6 @@
 </script>
 
 <script>
-
-    $(function() {
-        var select = $( "#dateSelect" );
-        var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
-          min: 1,
-          max: 6,
-          range: "min",
-          value: select[ 0 ].selectedIndex + 1,
-          slide: function( event, ui ) {
-            select[ 0 ].selectedIndex = ui.value - 1;
-          }
-        });
-        $( "#dateSelect" ).change(function() {
-          slider.slider( "value", this.selectedIndex + 1 );
-        });
-      });
-
     var root;
 
     // ************** Generate the tree diagram	 *****************
@@ -57,7 +40,13 @@
 
     var tree = d3.layout.tree().size([height, width]);
 
-    var diagonal = d3.svg.diagonal().projection(function(d) { return [d.y, d.x]; });
+    var diagonal = d3.svg.diagonal().projection(function(d) {
+        if(d.type === 'rt_nofollow'){
+            return [d.y + 50, d.x];
+        }else{
+            return [d.y, d.x];
+        }
+    });
 
     var svg = d3.select(".chart")
             .attr("width", width + margin.right + margin.left)
@@ -66,72 +55,83 @@
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-    d3.json("data/search_results_sdcc.json", function(json) {
-        var data = massage(json);
-                console.log(data);
+    function getData(offset){
+        d3.json("data/search_results_sdcc_" + offset + ".json", function(json) {
+            var data = massage(json);
                 root = data;
                 update();
-            });
+        });
+    }
 
-        function massage(tweetData) {
-            var newData = {
-                "name": tweetData.name,
-                "weight": 500,
-                "type": "search",
-                "children": []
-            };
+    function massage(searchData) {
+        var search = {
+            "name": searchData.name,
+            "weight": 500,
+            "type": "search",
+            "children": []
+        };
 
-            newData.children = digestChildren(tweetData.tweets,'tweet');
+        search.children = digestChildren(searchData.tweets,'tweet');
 
-            for(var i = 0; i < newData.children.length; i++ ) {
-                var child = newData.children[i];
-            }
+        return search;
+    }
 
-            return newData;
+    function digestChildren( children, type ) {
+        var tweets = [];
+        for(var i = 0; i < children.length; i++ ) {
+            var tweetObj = children[i],
+                tweet = tweetObj.tweet,
+                childTweets = tweetObj.children,
+                child = {
+                    "name": tweet.username,
+                    "weight": tweet.followerCount,
+                    "type": type,
+                    "tweet": tweet
+                };
+                if(tweetObj.children || tweetObj.adoptedChildren){
+                    var retweets = [];
+                    if(tweetObj.children && tweetObj.children.length > 0)
+                        retweets = digestChildren(tweetObj.children, "rt_follow");
+                    if(tweetObj.adoptedChildren && tweetObj.adoptedChildren.length > 0)
+                        retweets = retweets.concat(digestChildren(tweetObj.adoptedChildren, "rt_nofollow"));
+                    child.children = retweets;
+                };
+
+            tweets.push(child);
         }
-
-        function digestChildren( children, type, depth ) {
-            if(typeof(depth)==='undefined') depth = 0;
-            if( depth < 2 ) {
-                var toRet = [];
-                for(var i = 0; i < children.length; i++ ) {
-                    var tweetObj = children[i],
-                        tweet = tweetObj.tweet,
-                        childTweets = tweetObj.children,
-                        nextGen = digestChildren(tweetObj.children, "rt_follow" , depth++).concat(digestChildren(tweetObj.adoptedChildren, "rt_nofollow" , depth++)),
-                        child = {
-                            "name": tweet.username,
-                            "weight": tweet.followerCount,
-                            "type": type,
-                            "tweet": tweet,
-                            "children": nextGen
-                        };
-                    toRet.push(child);
-                }
-                return toRet;
-            }
-            else {
-                return [];
-            }
-        }
+        return tweets;
+    }
 
     var type_styles = {
         search:{
-            circle:{r:50},
-            text:{'dy':'70px','dx':'-25px'}
+            circle:{r:5},
+            text:{'dy':5,'dx':0, anchor:'middle'}
         },
         tweet: {
-            circle:{r:30},
-            text:{'dy':'50px','dx':'-15px'}
+            circle:{r:3},
+            text:{'dy':4,'dx':0, anchor:'middle'}
         },
         rt_follow:{
-            circle:{r:20},
-            text: {'dy':'.35em','dx':'30px'}
+            circle:{r:2},
+            text: {'dy':0,'dx':3, anchor:'start'}
         },
         rt_nofollow:{
-            circle:{r:20},
-            text: {'dy':'.35em','dx':'30px'}
+            circle:{r:1.8},
+            text: {'dy':0,'dx':3, anchor:'start'}
         }
+    }
+
+    function flatten(root) {
+        var nodes = [], i = 0;
+
+        function recurse(node) {
+            if (node.children) node.children.forEach(recurse);
+            if (!node.id) node.id = ++i;
+            nodes.push(node);
+        }
+
+        recurse(root);
+        return nodes;
     }
 
     function update() {
@@ -139,6 +139,8 @@
         // Compute the new tree layout.
         var nodes = tree.nodes(root).reverse();
         var links = tree.links(nodes);
+
+        var circleScale = d3.scale.linear().domain([0, (nodes.length < 5 ? 5 : nodes.length)]);
 
         // Normalize for fixed-depth.
         nodes.forEach(function(d) { d.y = d.depth * 180; });
@@ -151,20 +153,27 @@
         var nodeEnter = node.enter().append("g")
                 .attr("class", "node")
                 .attr("transform", function(d) {
-                    return "translate(" + d.y + "," + d.x + ")"; });
+                    if(d.type === 'rt_nofollow'){
+                        return "translate(" + (d.y + 50) + "," + d.x + ")";
+                    }else{
+                        return "translate(" + d.y + "," + d.x + ")"; }
+                    }
+                );
 
         nodeEnter.append("circle")
-                .attr('r', function(d){ return type_styles[d.type].circle.r; })
+                .attr('r', function(d){ return circleScale(type_styles[d.type].circle.r) * 50; })
                 .attr('class', function(d) { return 'node_'+d.type; })
                 .on('click',click);
 
         nodeEnter.append('text')
-                .attr('dy', function(d){ return type_styles[d.type].text.dy; })
-                .attr('dx', function(d){ return type_styles[d.type].text.dx; })
+                .attr('dy', function(d){ return (circleScale(type_styles[d.type].text.dy) * 75) + 5; })
+                .attr('dx', function(d){ return circleScale(type_styles[d.type].text.dx) * 50; })
                 .attr('class',function(d) { return 'text_'+d.type; })
+                .attr('text-anchor',  function(d){ return type_styles[d.type].text.anchor; })
                 .text(function(d){ return d.name;})
                 .on('click',click);
 
+        node.exit().remove();
 
         // Declare the links…
         var link = svg.selectAll("path.link")
@@ -173,9 +182,12 @@
         // Enter the links.
         link.enter().insert("path", "g")
                 .attr("class", "link")
-                .style("stroke", function(d) { return '#666'; })
+                .style("stroke", function(d) { return  d.target.type === 'rt_nofollow' ? '#888':'#666' })
+                .style("stroke-dasharray",function(d) { return  d.target.type === 'rt_nofollow' ? '5,2':'0' })
                 .style("fill", "none")
                 .attr("d", diagonal);
+
+        link.exit().remove();
 
         function click(d, i){
             var domElement = this,
@@ -200,6 +212,27 @@
             }
         }
     }
+
+    $(function() {
+            var select = $( "#dateSelect" );
+            var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
+              min: 1,
+              max: 6,
+              range: "min",
+              value: select[ 0 ].selectedIndex + 1,
+              slide: function( event, ui ) {
+                select[ 0 ].selectedIndex = ui.value - 1;
+                getData(ui.value);
+              }
+            });
+            $( "#dateSelect" ).change(function() {
+              slider.slider( "value", this.selectedIndex + 1 );
+              getData(this.selectedIndex + 1);
+            });
+
+            getData(1);
+          });
+
 </script>
 
 <?php require_once 'templates/footer.php' ?>
